@@ -60,4 +60,14 @@ public class AuthorizationServerConfiguration implements AuthorizationServerConf
         endpoints.authenticationManager(authenticationManager);
     }
     
+//    @Override
+//    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+//        clients.inMemory()
+//                .withClient(clientId)
+//                .secret(secret)
+//                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+//                .authorities("USER", "ADMIN")
+//                .scopes("read", "write", "trust")
+//                .resourceIds(resourceId)
+//    }
 }
