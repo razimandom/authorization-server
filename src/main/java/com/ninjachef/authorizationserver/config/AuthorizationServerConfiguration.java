@@ -1,5 +1,7 @@
 package com.ninjachef.authorizationserver.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,14 +9,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
-import javax.sql.DataSource;
-
 @Configuration
+@EnableAuthorizationServer
 public class AuthorizationServerConfiguration implements AuthorizationServerConfigurer {
 
     @Autowired
@@ -38,7 +40,17 @@ public class AuthorizationServerConfiguration implements AuthorizationServerConf
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
+        clients
+        .jdbc(dataSource).passwordEncoder(passwordEncoder)
+//        .inMemory()
+//        .withClient("mobile")
+//        .secret(passwordEncoder.encode("pin"))
+//        .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+//        .authorities("USER", "ADMIN")
+//        .scopes("read", "write", "trust")
+//        .resourceIds("test")
+        ;
+        
 
     }
 
@@ -47,4 +59,5 @@ public class AuthorizationServerConfiguration implements AuthorizationServerConf
         endpoints.tokenStore(jdbcTokenStore());
         endpoints.authenticationManager(authenticationManager);
     }
+    
 }
