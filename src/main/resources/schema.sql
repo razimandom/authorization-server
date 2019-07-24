@@ -64,7 +64,8 @@ create table if not exists role_user (
   key role_id (role_id),
   key user_id (user_id),
   constraint role_user_ibfk_1 foreign key (role_id) references role (id),
-  constraint role_user_ibfk_2 foreign key (user_id) references user (id)
+  constraint role_user_ibfk_2 foreign key (user_id) references user (id),
+   primary key (id)
 ) engine=innodb ;
 
 -- token store
